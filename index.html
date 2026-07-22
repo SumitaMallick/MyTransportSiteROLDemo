@@ -992,19 +992,6 @@
                     <div class="pega-frame-note">
                       The form below is rendered using the supplied Pega Web Embed configuration. If it does not load, check CORS, OAuth client allow-listing, and browser console errors for the Pega server domain.
                     </div>
-                    <pega-embed
-                      id="theEmbed"
-                      action="createCase"
-                      caseTypeID="MyOrg-ROLManag-Work-ProponentRegistration"
-                      themeID="ROLManag"
-                      casePage="simplifiedAssignment"
-                      appAlias="rol-management"
-                      pegaServerUrl="https://accenture78.pegalabs.io/prweb/"
-                      autoReauth="true"
-                      authService="pega"
-                      clientId="26652123456887360744"
-                      style="width:100%">
-                    </pega-embed>
                   </div>
                 </div>
               </div>
@@ -1099,12 +1086,36 @@
       const startRegistrationBtn = document.getElementById('start-registration-btn');
       const guidanceView = document.getElementById('guidance-view');
       const embedView = document.getElementById('embed-view');
+      let embedCreated = false; // Flag to ensure the embed is only created once
 
       if (startRegistrationBtn) {
         startRegistrationBtn.addEventListener('click', function() {
           if (guidanceView) guidanceView.style.display = 'none';
           if (embedView) {
             embedView.style.display = 'block';
+
+            // Dynamically create the Pega embed element only if it hasn't been created yet
+            if (!embedCreated) {
+              const embedContainer = document.querySelector('.pega-frame');
+              if (embedContainer) {
+                const pegaEmbed = document.createElement('pega-embed');
+                pegaEmbed.id = "theEmbed";
+                pegaEmbed.setAttribute('action', 'createCase');
+                pegaEmbed.setAttribute('caseTypeID', 'MyOrg-ROLManag-Work-ProponentRegistration');
+                pegaEmbed.setAttribute('themeID', 'ROLManag');
+                pegaEmbed.setAttribute('casePage', 'simplifiedAssignment');
+                pegaEmbed.setAttribute('appAlias', 'rol-management');
+                pegaEmbed.setAttribute('pegaServerUrl', 'https://accenture78.pegalabs.io/prweb/');
+                pegaEmbed.setAttribute('autoReauth', 'true');
+                pegaEmbed.setAttribute('authService', 'pega');
+                pegaEmbed.setAttribute('clientId', '26652123456887360744');
+                pegaEmbed.style.width = '100%';
+                
+                embedContainer.appendChild(pegaEmbed);
+                embedCreated = true;
+              }
+            }
+
             embedView.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
