@@ -2,5 +2,5 @@
 *
 
 # But re-include the specific files we want to track
-!NSWDEmo.html
+!index.html
 !.gitignore
