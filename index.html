@@ -1115,19 +1115,22 @@
                 pegaEmbed.style.width = '100%';
                 
 
-                // Listen for the Pega 'close confirmation' event to reset the view
-                pegaEmbed.addEventListener('embedcloseconfirmview', function() {
+                // Define a function to reset the view after the Pega interaction ends
+                const resetPegaEmbedView = () => {
                   if (embedView) embedView.style.display = 'none';
                   if (guidanceView) guidanceView.style.display = 'block';
 
                   // Remove the embed element and reset the flag to allow re-creation
                   const embedToRemove = document.getElementById('theEmbed');
-                  if (embedToRemove) {
-                    embedToRemove.remove();
-                  }
+                  if (embedToRemove) embedToRemove.remove();
                   embedCreated = false;
-                });
+                };
 
+                // Listen for Pega events that signify the end of the user's interaction
+                pegaEmbed.addEventListener('embedcloseconfirmview', resetPegaEmbedView);
+                pegaEmbed.addEventListener('embedeventcancel', resetPegaEmbedView);
+                pegaEmbed.addEventListener('embedcaseclosed', resetPegaEmbedView);
+                
                 embedContainer.appendChild(pegaEmbed);
                 embedCreated = true;
               }
