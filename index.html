@@ -1131,7 +1131,14 @@
                 pegaEmbed.addEventListener('embedeventcancel', resetPegaEmbedView);
                 pegaEmbed.addEventListener('pega:user:work:cancel', resetPegaEmbedView);
                 pegaEmbed.addEventListener('pega:user:event:cancel', resetPegaEmbedView);
+                pegaEmbed.addEventListener('pega:user:work:submit', resetPegaEmbedView);
                 pegaEmbed.addEventListener('embedcaseclosed', resetPegaEmbedView);
+                
+                // --- DEBUGGING STEP ---
+                // The listener below will log ALL events from the Pega embed to the browser console.
+                pegaEmbed.addEventListener('pega:*', (event) => {
+                  console.log('Pega event fired:', event.type, event.detail);
+                });
                 
                 embedContainer.appendChild(pegaEmbed);
                 embedCreated = true;
