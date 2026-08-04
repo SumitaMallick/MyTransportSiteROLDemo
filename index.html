@@ -1129,6 +1129,8 @@
                 // Listen for Pega events that signify the end of the user's interaction
                 pegaEmbed.addEventListener('embedcloseconfirmview', resetPegaEmbedView);
                 pegaEmbed.addEventListener('embedeventcancel', resetPegaEmbedView);
+                pegaEmbed.addEventListener('pega:user:work:cancel', resetPegaEmbedView);
+                pegaEmbed.addEventListener('pega:user:event:cancel', resetPegaEmbedView);
                 pegaEmbed.addEventListener('embedcaseclosed', resetPegaEmbedView);
                 
                 embedContainer.appendChild(pegaEmbed);
